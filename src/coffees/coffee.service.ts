@@ -28,6 +28,9 @@ export class CoffeeService {
     const existingCoffee = this.findOne(id);
     if (existingCoffee) {
       // update
+      Object.keys(updateCoffeeDto).forEach((element) => {
+        existingCoffee[element] = updateCoffeeDto[element];
+      });
     }
   }
 
