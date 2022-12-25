@@ -21,25 +21,21 @@ export class CoffeeController {
   constructor(private readonly coffeeService: CoffeeService) {}
 
   @Get()
-  findAll(@Query() paginationQuery): Coffee[] {
+  findAll(@Query() paginationQuery) {
     // const { limit, offset } = paginationQuery;
     return this.coffeeService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Coffee {
-    const coffee = this.coffeeService.findOne(id);
-    if (!coffee) {
-      throw new NotFoundException(`Coffee #${id} not found`);
-    }
-
-    return coffee;
+  findOne(@Param('id') id: string) {
+    return this.coffeeService.findOne(id);
   }
 
   @Post()
   // @HttpCode(HttpStatus.GONE)
-  create(@Body() createCoffeeDto: CreateCoffeeDto) {
-    return this.coffeeService.create(createCoffeeDto);
+  async create(@Body() createCoffeeDto: CreateCoffeeDto) {
+    await this.coffeeService.create(createCoffeeDto);
+    return createCoffeeDto;
   }
 
   @Patch(':id')
