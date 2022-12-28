@@ -6,8 +6,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
+      whitelist: true, // If set to true, validator will strip validated (returned) object of any properties that do not use any validation decorators.
+      forbidNonWhitelisted: true, // If set to true, instead of stripping non-whitelisted properties validator will throw an exception.
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true, // If set to true class-transformer will attempt conversion based on TS reflected type
+      },
     }),
   );
   await app.listen(3000);
