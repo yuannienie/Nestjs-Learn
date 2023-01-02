@@ -6,9 +6,12 @@ import { CoffeeService } from './coffee.service';
 import { Module } from '@nestjs/common';
 import { Event } from 'src/events/entities/event.entity';
 
+class MockCoffeeService {}
+
 @Module({
   imports: [TypeOrmModule.forFeature([Coffee, Flavor, Event])],
   controllers: [CoffeeController],
+  // providers: [{ provide: CoffeeService, useValue: new MockCoffeeService() }],
   providers: [CoffeeService],
   exports: [CoffeeService],
 })
