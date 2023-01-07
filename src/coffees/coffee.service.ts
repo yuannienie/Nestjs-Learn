@@ -4,12 +4,12 @@ import { Flavor } from './entities/flavor.entity';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto/update-coffee.dto';
 import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { Event } from 'src/events/entities/event.entity';
 
-@Injectable()
+@Injectable({ scope: Scope.DEFAULT }) // Scope.DEFAULT => singleton, most case configuration for performance
 export class CoffeeService {
   constructor(
     @InjectRepository(Coffee)
@@ -19,7 +19,8 @@ export class CoffeeService {
     private readonly connection: Connection,
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
   ) {
-    console.log(coffeeBrands);
+    console.log(coffeeBrands); // Scope.TRANSIT, there will be initialized twice(coffeeController and coffeeBrandFactory)
+    // for Scope.REQUEST, every real request will re-initialized
   }
 
   findAll(paginationQuery: PaginationQueryDto) {
