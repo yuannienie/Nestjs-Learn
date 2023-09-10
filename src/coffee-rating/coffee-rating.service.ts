@@ -1,7 +1,12 @@
 import { CoffeeService } from './../coffees/coffee.service';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CoffeeRatingService {
-  constructor(private readonly coffeeService: CoffeeService) {}
+  constructor(
+    private readonly coffeeService: CoffeeService,
+    @Inject('CONNECTION') private connection,
+  ) {
+    console.log('connection config: ', this.connection);
+  }
 }
