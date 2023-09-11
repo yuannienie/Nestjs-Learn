@@ -9,6 +9,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Inject,
   NotFoundException,
   Param,
   Patch,
@@ -16,10 +17,22 @@ import {
   Query,
 } from '@nestjs/common';
 import { CoffeeService } from './coffee.service';
+import { REQUEST } from '@nestjs/core';
+import { Request } from 'express';
 
 @Controller('coffees')
 export class CoffeeController {
-  constructor(private readonly coffeeService: CoffeeService) {}
+  constructor(
+    private readonly coffeeService: CoffeeService,
+    // when setting services to request scoped, the controller will be also "bubbled" into request scoped
+    // by this way, we can get request in controller constructor, but use with caution as performance will be affected
+    @Inject(REQUEST) private readonly request: Request,
+  ) {
+    console.log(
+      'CoffeeController created, the request ip is: ',
+      this.request.ip,
+    );
+  }
 
   @Get()
   findAll(@Query() paginationQuery: PaginationQueryDto) {

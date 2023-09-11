@@ -4,7 +4,7 @@ import { Coffee } from './entities/coffee.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoffeeController } from './coffee.controller';
 import { CoffeeService } from './coffee.service';
-import { Inject, Module, Injectable } from '@nestjs/common';
+import { Inject, Module, Injectable, Scope } from '@nestjs/common';
 import { Event } from 'src/events/entities/event.entity';
 import { Connection } from 'typeorm';
 
@@ -26,8 +26,9 @@ import { Connection } from 'typeorm';
         return coffeeBrands;
       },
       inject: [Connection],
+      // scope: Scope.TRANSIENT,
     },
   ],
   exports: [CoffeeService],
 })
-export class CoffeesModule {}
+export class CoffeesModule { }

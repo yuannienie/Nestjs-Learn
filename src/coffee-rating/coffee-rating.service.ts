@@ -7,6 +7,6 @@ export class CoffeeRatingService {
     private readonly coffeeService: CoffeeService,
     @Inject('CONNECTION') private connection,
   ) {
-    console.log('connection config: ', this.connection);
+    // console.log('connection config: ', this.connection);
   }
 }
