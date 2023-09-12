@@ -8,7 +8,8 @@ import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { Event } from 'src/events/entities/event.entity';
-import { ConfigService } from '@nestjs/config';
+import coffeeConfig from './config/coffee.config';
+import { ConfigService, ConfigType } from '@nestjs/config';
 
 @Injectable({ scope: Scope.DEFAULT }) // Scope.DEFAULT => singleton, most case configuration for performance
 export class CoffeeService {
@@ -20,10 +21,16 @@ export class CoffeeService {
     private readonly connection: Connection,
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
     private readonly configService: ConfigService,
+    @Inject(coffeeConfig.KEY)
+    private readonly coffeesConfiguration: ConfigType<typeof coffeeConfig>,
   ) {
     console.log('CoffeeService instantiated');
-    const localHost = this.configService.get('DATABASE_HOST', 'localhost');
-    console.log(localHost);
+    console.log(
+      'get from configService: ',
+      this.configService.get('DATABASE_USER'),
+      this.configService.get('database.host'),
+    );
+    console.log('get from inject coffeeConfig: ', this.coffeesConfiguration);
     // console.log(coffeeBrands); // Scope.TRANSIT, there will be initialized twice(coffeeController and coffeeBrandFactory)
     // for Scope.REQUEST, every real request will re-initialized
   }
