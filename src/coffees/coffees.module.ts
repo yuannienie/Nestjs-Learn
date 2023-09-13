@@ -4,12 +4,20 @@ import { Coffee } from './entities/coffee.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoffeeController } from './coffee.controller';
 import { CoffeeService } from './coffee.service';
-import { Inject, Module, Injectable, Scope } from '@nestjs/common';
+import {
+  Inject,
+  Module,
+  Injectable,
+  Scope,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Event } from 'src/events/entities/event.entity';
 import { Connection } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
 import coffeeConfig from './config/coffee.config';
 
+@UsePipes(ValidationPipe)
 @Module({
   imports: [
     TypeOrmModule.forFeature([Coffee, Flavor, Event]),

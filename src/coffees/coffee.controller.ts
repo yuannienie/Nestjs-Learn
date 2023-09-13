@@ -15,6 +15,8 @@ import {
   Patch,
   Post,
   Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CoffeeService } from './coffee.service';
 import { REQUEST } from '@nestjs/core';
@@ -34,6 +36,7 @@ export class CoffeeController {
     );
   }
 
+  @UsePipes(ValidationPipe)
   @Get()
   findAll(@Query() paginationQuery: PaginationQueryDto) {
     return this.coffeeService.findAll(paginationQuery);
@@ -52,7 +55,10 @@ export class CoffeeController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
+  update(
+    @Param('id') id: string,
+    @Body(ValidationPipe) updateCoffeeDto: UpdateCoffeeDto,
+  ) {
     return this.coffeeService.update(id, updateCoffeeDto);
   }
 
