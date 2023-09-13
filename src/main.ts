@@ -17,7 +17,6 @@ async function bootstrap() {
     }),
   );
   app.useGlobalFilters(new HttpExceptionFilter());
-  app.useGlobalGuards(ApiGuard.create());
   await app.listen(3000);
 }
 bootstrap();

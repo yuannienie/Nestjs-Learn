@@ -21,6 +21,7 @@ import {
 import { CoffeeService } from './coffee.service';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller('coffees')
 export class CoffeeController {
@@ -37,6 +38,7 @@ export class CoffeeController {
   }
 
   @UsePipes(ValidationPipe)
+  @Public()
   @Get()
   findAll(@Query() paginationQuery: PaginationQueryDto) {
     return this.coffeeService.findAll(paginationQuery);
