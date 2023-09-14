@@ -23,8 +23,9 @@ export class ApiGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const isPublic = this.reflector.get(IS_PUBLIC_KEY, context.getHandler());
     if (isPublic) return true; // directly return true for public decorated method
-    const request = context.switchToHttp().getRequest<Request>();
-    const API_KEY = request.header('Authorization');
-    return API_KEY === this.configService.get('API_KEY');
+    // const request = context.switchToHttp().getRequest<Request>();
+    // const API_KEY = request.header('Authorization');
+    // return API_KEY === this.configService.get('API_KEY');
+    return true;
   }
 }

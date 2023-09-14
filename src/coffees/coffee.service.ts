@@ -35,7 +35,10 @@ export class CoffeeService {
     // for Scope.REQUEST, every real request will re-initialized
   }
 
-  findAll(paginationQuery: PaginationQueryDto) {
+  async findAll(paginationQuery: PaginationQueryDto) {
+    const delay = (timeout: number) =>
+      new Promise((resolve) => setTimeout(resolve, timeout));
+    await delay(4000);
     const { limit, offset } = paginationQuery;
     return this.coffeeRepository.find({
       relations: ['flavors'],
