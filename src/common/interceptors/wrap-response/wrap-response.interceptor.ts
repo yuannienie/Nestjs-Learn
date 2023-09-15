@@ -16,6 +16,6 @@ export class WrapResponseInterceptor implements NestInterceptor {
     return next
       .handle()
       .pipe(map((data) => ({ data }))) // data is response here
-      .pipe(tap((data) => console.log('after...', data)));
+      .pipe(tap((data) => console.log('after...')));
   }
 }

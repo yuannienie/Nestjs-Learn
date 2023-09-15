@@ -22,6 +22,7 @@ import { CoffeeService } from './coffee.service';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { Public } from 'src/common/decorators/public.decorator';
+import { ParseIntPipe } from 'src/common/pipes/parse-int/parse-int.pipe';
 
 @Controller('coffees')
 export class CoffeeController {
@@ -45,7 +46,7 @@ export class CoffeeController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseIntPipe) id: string) {
     return this.coffeeService.findOne(id);
   }
 

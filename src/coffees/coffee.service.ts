@@ -36,9 +36,9 @@ export class CoffeeService {
   }
 
   async findAll(paginationQuery: PaginationQueryDto) {
-    const delay = (timeout: number) =>
-      new Promise((resolve) => setTimeout(resolve, timeout));
-    await delay(4000);
+    // const delay = (timeout: number) =>
+    //   new Promise((resolve) => setTimeout(resolve, timeout));
+    // await delay(4000);
     const { limit, offset } = paginationQuery;
     return this.coffeeRepository.find({
       relations: ['flavors'],
