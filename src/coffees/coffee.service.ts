@@ -4,7 +4,13 @@ import { Flavor } from './entities/flavor.entity';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto/update-coffee.dto';
 import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
-import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  Query,
+  Scope,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { Event } from 'src/events/entities/event.entity';
@@ -36,8 +42,7 @@ export class CoffeeService {
   }
 
   async findAll(paginationQuery: PaginationQueryDto) {
-    // const delay = (timeout: number) =>
-    //   new Promise((resolve) => setTimeout(resolve, timeout));
+    // const delay = (timeout: number) => new Promise((resolve) => setTimeout(resolve, timeout));
     // await delay(4000);
     const { limit, offset } = paginationQuery;
     return this.coffeeRepository.find({

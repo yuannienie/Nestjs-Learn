@@ -23,6 +23,7 @@ import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { Public } from 'src/common/decorators/public.decorator';
 import { ParseIntPipe } from 'src/common/pipes/parse-int/parse-int.pipe';
+import { Protocol } from 'src/common/decorators/protocol.decorator';
 
 @Controller('coffees')
 export class CoffeeController {
@@ -41,7 +42,11 @@ export class CoffeeController {
   @UsePipes(ValidationPipe)
   @Public()
   @Get()
-  findAll(@Query() paginationQuery: PaginationQueryDto) {
+  findAll(
+    @Protocol('https') protocol: string,
+    @Query() paginationQuery: PaginationQueryDto,
+  ) {
+    console.log('The protocol is:', protocol);
     return this.coffeeService.findAll(paginationQuery);
   }
 
